@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PoolManager : Singleton<PoolManager>
 {
+    [Header("BULLETS")]
     public BulletBehaviour[] bullets;
     private int _bulletID = 0;
     public int BulletID 
@@ -22,4 +23,10 @@ public class PoolManager : Singleton<PoolManager>
         
         }
     }
+    [Space(10)]
+
+    [Header("ENEMIES")]
+    public MinionBehaviour[] enemies;
+    
+
 }

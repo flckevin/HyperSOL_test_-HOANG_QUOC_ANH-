@@ -9,11 +9,14 @@ public class GameManager : Singleton<GameManager>
 
     [Space(10)]
     [Header("ENEMY INFO")]
-    public MinionBehaviour[] minons;
+    public MasterBehaviour master;
 
     [Space(10)]
     [Header("ENEMY FORMATION PATTERNS")]
     public List<GameObject> patterns;
 
-   
+    [Space(10)]
+
+    [Header("TILES")]
+    public List<GameObject> tiles = new List<GameObject>();
 }
