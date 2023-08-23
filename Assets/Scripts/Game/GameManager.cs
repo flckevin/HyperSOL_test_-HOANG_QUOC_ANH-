@@ -21,4 +21,8 @@ public class GameManager : Singleton<GameManager>
 
     [Header("TILES")]
     public List<GameObject> tiles = new List<GameObject>();
+
+    [Space(10)]
+    [Header("HIGH SCORE")]
+    public HighScroreManager highscore;
 }

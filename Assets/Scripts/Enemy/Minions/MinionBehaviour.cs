@@ -52,7 +52,9 @@ public class MinionBehaviour : MonoBehaviour
         this.gameObject.SetActive(false);
         GameManager.Instance.master.currentMinionAmount--;
         GameManager.Instance.master.CheckMinion();
+        GameManager.Instance.highscore.UpdateScore();
         GetComponent<BoxCollider2D>().enabled = false;
         this.gameObject.transform.localPosition = _originPos;
+
     }
 }
