@@ -6,6 +6,7 @@ public class TriangleBlaster : GunRoot
 {
     public float[] zRotation;
     public Vector2[] positionOffSet;
+    
     public override void GunBehaviour()
     {
         for (int i = 0; i < positionOffSet.Length; i++) 
@@ -17,6 +18,7 @@ public class TriangleBlaster : GunRoot
             PoolManager.Instance.bullets[PoolManager.Instance.BulletID].transform.eulerAngles = new Vector3(0, 0, zRotation[i]);
             PoolManager.Instance.bullets[PoolManager.Instance.BulletID].gameObject.SetActive(true);
             PoolManager.Instance.BulletID++;
+            PoolManager.Instance.bullets[PoolManager.Instance.BulletID].name = gunStats.damage.ToString();
         }
 
        

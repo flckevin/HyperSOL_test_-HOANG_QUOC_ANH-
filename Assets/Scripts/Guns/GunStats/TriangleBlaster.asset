@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: TriangleBlaster
   m_EditorClassIdentifier: 
   fireRate: 1.25
+  damage: 5

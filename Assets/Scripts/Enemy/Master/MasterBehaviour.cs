@@ -8,16 +8,22 @@ public class MasterBehaviour : MonoBehaviour
 
     public int currentMinionAmount = 0;
     public float sortingSpeed;
+    public float movingSpeed;
 
-    private int _sortedMinion;
+    public int _sortedMinion;
     private List<Transform> _paths = new List<Transform>();
     private int _masterPathTravelled;
     private Vector3 _originPosition;
     bool reversed = false;
     void Start()
     {
-        _originPosition = this.transform.position;
 
+        for (int i = 0; i < PoolManager.Instance.enemies.Length; i++) 
+        {
+            PoolManager.Instance.enemies[i].transform.parent = GameManager.Instance.enemiesCarrier;
+        }
+
+        _originPosition = this.transform.position;
         Grid grid = new Grid(this.gameObject);
         grid.Initiate();
         CheckMinion();
@@ -36,6 +42,16 @@ public class MasterBehaviour : MonoBehaviour
         }
 
         if (_paths.Count == 0) return;
+
+        #region Minion Finalize
+
+        for (int i = 0; i < PoolManager.Instance.enemies.Length; i++) 
+        {
+            PoolManager.Instance.enemies[i].GetComponent<BoxCollider2D>().enabled = true;
+        }
+
+        #endregion
+
         StartCoroutine(MasterFollowPath());
 
             
@@ -46,37 +62,64 @@ public class MasterBehaviour : MonoBehaviour
         
         while (currentMinionAmount > 0) 
         {
+            #region getTarget
             //vector 2 will reset z axis value back to 0 so that we use vector 3
             Vector3 _nextTarget = new Vector3(_paths[_masterPathTravelled].transform.position.x,
                                             _paths[_masterPathTravelled].transform.position.y, 
                                             this.transform.position.z);
+            #endregion
 
+            #region move to target
             this.transform.position = Vector3.MoveTowards(this.transform.position,
                                                                     _nextTarget,
-                                                                    1 * Time.deltaTime);
+                                                                    movingSpeed * Time.deltaTime);
+            #endregion
 
-            if (_masterPathTravelled != _paths.Count - 1 && 
-                Vector3.Distance(this.transform.position, _nextTarget) <= 0 && 
-                reversed == false)
-            {
-                _masterPathTravelled++;
-                _nextTarget = _paths[_masterPathTravelled].position;
-                if (_masterPathTravelled == _paths.Count - 1)
+            #region Condition checking
+
+                if (reversed == false 
+                    && Vector3.Distance(this.transform.position, _nextTarget) <= 0
+                    )
                 {
-                    reversed = true;
+
+                    if (_masterPathTravelled >= _paths.Count - 1 && Vector3.Distance(this.transform.position, _nextTarget) <= 0)
+                    {
+                        reversed = true;
+                        _masterPathTravelled--;
+                        _nextTarget = new Vector3(_paths[_masterPathTravelled].transform.position.x,
+                                            _paths[_masterPathTravelled].transform.position.y,
+                                            this.transform.position.z);
+                    }
+                    else 
+                    {
+                        _masterPathTravelled++;
+                    }
+
+                   // Debug.Log(_nextTarget + "|" + reversed + "|" + _masterPathTravelled);
+
                 }
-            }
-            else if (_masterPathTravelled >= _paths.Count - 1 && 
-                        reversed == true ) 
-            {
-                _masterPathTravelled--;
-                _nextTarget = _paths[_masterPathTravelled].position;
-                if (_masterPathTravelled <= 0)
+                else if(reversed == true 
+                        && Vector3.Distance(this.transform.position, _nextTarget) <= 0
+                        )
                 {
-                    reversed = false;
+                    
+                    if (_masterPathTravelled == 0 && Vector3.Distance(this.transform.position, _nextTarget) <= 0)
+                    {
+                        reversed = false;
+                        _masterPathTravelled++;
+                        _nextTarget = new Vector3(_paths[_masterPathTravelled].transform.position.x,
+                                            _paths[_masterPathTravelled].transform.position.y,
+                                            this.transform.position.z);
+                    }
+                    else 
+                    {
+                        _masterPathTravelled--;
+                    }
                 }
-                Debug.Log("YEET");
-            }
+            
+            #endregion
+
+
             //Debug.Log(_masterPathTravelled + "|" + _paths.Count);
             yield return null;
 
@@ -94,13 +137,13 @@ public class MasterBehaviour : MonoBehaviour
         if (currentMinionAmount == 0)
         {
             this.transform.position = _originPosition;
-            _masterPathTravelled = 0;
-            _sortedMinion = 0;
             
             StartCoroutine(DelaySpawn_Minion());
         }
-        else if (currentMinionAmount >= (PoolManager.Instance.enemies.Length)*2) 
+        else if (currentMinionAmount >= PoolManager.Instance.enemies.Length) 
         {
+            _masterPathTravelled = 0;
+            _sortedMinion = 0;
             currentMinionAmount = PoolManager.Instance.enemies.Length;
             SortMinion();
         }
@@ -133,10 +176,10 @@ public class MasterBehaviour : MonoBehaviour
         while(_sortedMinion != PoolManager.Instance.enemies.Length) 
         {
             //we need to compare the root of gameobject itself so that we use position istead of localposition
-            if (Vector3.Distance(PoolManager.Instance.enemies[_sortedMinion].transform.position,
-                GameManager.Instance.tiles[_sortedMinion].transform.position) != 10 )
+            if (Vector2.Distance(PoolManager.Instance.enemies[_sortedMinion].transform.position,
+                GameManager.Instance.tiles[_sortedMinion].transform.position) != 0)
             {
-                //Debug.Log(Vector3.Distance(PoolManager.Instance.enemies[_sortedMinion].transform.position,
+                //Debug.Log(Vector2.Distance(PoolManager.Instance.enemies[_sortedMinion].transform.position,
                 //GameManager.Instance.tiles[_sortedMinion].transform.position));
 
                 Vector3 _nextTarget = new Vector3(GameManager.Instance.tiles[_sortedMinion].transform.position.x,

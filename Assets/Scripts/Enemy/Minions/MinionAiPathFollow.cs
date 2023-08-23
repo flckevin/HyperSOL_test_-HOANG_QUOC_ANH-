@@ -47,7 +47,7 @@ public class MinionAiPathFollow
            
             _currentMinion.transform.position = Vector3.MoveTowards(_currentMinion.transform.position,
                                                                     _nextTarget,
-                                                                    1 * Time.deltaTime);
+                                                                    3 * Time.deltaTime);
             
             //Debug.Log(Vector2.Distance(_currentMinion.transform.position, _nextPath.localPosition));
 
@@ -59,12 +59,16 @@ public class MinionAiPathFollow
                 //BUG here 02:07 AM 23/08/2023
                 //because while loop couroutine act like fixed update we are adding the amout of minion double the real minion amount
                 //we need to have a bool to stop execute code in condition block
-                if (_currentPath == _paths.Count - 1 && added == false) 
+                if (_currentPath == _paths.Count - 1) 
                 {
-                    GameManager.Instance.master.currentMinionAmount+=1;
-                    GameManager.Instance.master.CheckMinion();
-                    _currentMinion.transform.parent = GameManager.Instance.enemiesCarrier;
-                    added = true;
+                    if(added == false) 
+                    {
+                        GameManager.Instance.master.currentMinionAmount += 1;
+                        GameManager.Instance.master.CheckMinion();
+                        
+                        added = true;
+                    }
+                    
                     //Debug.Log("stopped" + _currentMinion.name);
                 }
                
