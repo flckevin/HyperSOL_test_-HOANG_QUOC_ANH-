@@ -17,6 +17,10 @@ public class MasterBehaviour : MonoBehaviour
     }
 
 
+    #region Master Behaviour
+
+    #endregion
+
 
     #region Minion Manager
 
