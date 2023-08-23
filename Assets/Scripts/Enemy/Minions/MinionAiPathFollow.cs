@@ -63,6 +63,7 @@ public class MinionAiPathFollow
                 {
                     GameManager.Instance.master.currentMinionAmount+=1;
                     GameManager.Instance.master.CheckMinion();
+                    _currentMinion.transform.parent = GameManager.Instance.enemiesCarrier;
                     added = true;
                     //Debug.Log("stopped" + _currentMinion.name);
                 }

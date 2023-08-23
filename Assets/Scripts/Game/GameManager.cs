@@ -10,6 +10,8 @@ public class GameManager : Singleton<GameManager>
     [Space(10)]
     [Header("ENEMY INFO")]
     public MasterBehaviour master;
+    public List<Transform> masterPathsPatterns;
+    public Transform enemiesCarrier;
 
     [Space(10)]
     [Header("ENEMY FORMATION PATTERNS")]
