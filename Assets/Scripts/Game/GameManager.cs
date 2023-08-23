@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
+using TMPro;
 public class GameManager : Singleton<GameManager>
 {
     [Header("PLAYER INFO")]
@@ -25,4 +26,11 @@ public class GameManager : Singleton<GameManager>
     [Space(10)]
     [Header("HIGH SCORE")]
     public HighScroreManager highscore;
+
+    [Space(10)]
+    [Header("UI")]
+    public Image[] playerHealth;
+    public GameObject gameOverMenu;
+    public GameObject gameUI;
+    public TextMeshProUGUI score_gameOverMenu;
 }

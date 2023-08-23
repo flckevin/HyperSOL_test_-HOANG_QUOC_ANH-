@@ -21,6 +21,7 @@ public class TriangleBlaster : GunRoot
             PoolManager.Instance.bullets[PoolManager.Instance.BulletID].name = gunStats.damage.ToString();
         }
 
+        _audioSrc.PlayOneShot(gunStats.gunClip, 1);
        
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 public class HighScroreManager : MonoBehaviour
 {
-    public int _score;
+    public int score;
     public TextMeshProUGUI textMesh;
     private int _highestScore;
     private void Start()
@@ -13,11 +13,11 @@ public class HighScroreManager : MonoBehaviour
     }
     public void UpdateScore() 
     {
-        _score++;
-        textMesh.text = _score.ToString();
-        if (_score > _highestScore) 
+        score++;
+        textMesh.text = score.ToString();
+        if (score > _highestScore) 
         {
-            PlayerPrefs.SetInt("HighScore", _score);
+            PlayerPrefs.SetInt("HighScore", score);
         }
     }
 }

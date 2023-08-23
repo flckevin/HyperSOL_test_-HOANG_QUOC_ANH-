@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireRate: 1.25
   damage: 5
+  gunClip: {fileID: 8300000, guid: f64dcd962f286364c8f141357c3c750a, type: 3}

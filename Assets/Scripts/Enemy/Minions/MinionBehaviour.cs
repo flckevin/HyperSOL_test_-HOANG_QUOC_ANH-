@@ -37,10 +37,14 @@ public class MinionBehaviour : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+
         if (collision.gameObject.tag == "Bullet")
         {
             OnDamage(int.Parse(collision.name));
+        }
+        else if (collision.gameObject.tag == "Player") 
+        {
+            GameManager.Instance.player.Ondamage();
         }
     }
 
@@ -48,7 +52,9 @@ public class MinionBehaviour : MonoBehaviour
     {
         //Debug.Log("Damaged");
         _health-=_damageValue;
+        AudioManager.Instance.PlayAudioOneshot(AudioManager.Instance.audioList["hitHurt_enemy"]);
         if (_health > 0) return;
+        AudioManager.Instance.PlayAudioOneshot(AudioManager.Instance.audioList["explosion_enemy"]);
         this.gameObject.SetActive(false);
         GameManager.Instance.master.currentMinionAmount--;
         GameManager.Instance.master.CheckMinion();

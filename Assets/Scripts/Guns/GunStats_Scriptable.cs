@@ -6,4 +6,5 @@ public class GunStats_Scriptable : ScriptableObject
 {
     public float fireRate;
     public float damage;
+    public AudioClip gunClip;
 }

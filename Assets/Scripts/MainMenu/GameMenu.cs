@@ -3,18 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-public class MainMenu : MonoBehaviour
+public class GameMenu : MonoBehaviour
 {
     public Text highestScore;
 
     void Start()
     {
-        highestScore.text = $"HIGH SCORE: {PlayerPrefs.GetInt("HighScore").ToString()}";
+        if (highestScore != null) 
+        {
+            highestScore.text = $"HIGH SCORE: {PlayerPrefs.GetInt("HighScore").ToString()}";
+        }
+        
     }
 
     public void LoadScene(string _sceneName)
     {
         SceneManager.LoadScene(_sceneName);
+        Time.timeScale = 1;
     }
     
 }
