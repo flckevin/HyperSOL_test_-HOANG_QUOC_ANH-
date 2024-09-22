@@ -1,0 +1,1 @@
+A test that for HyperSOl company which I applied into, the test requires applicants to create a simple copy of space invader but with aliens moving with a pattern in game (they did not require to make it customizeable but i made it) | Developement Duration: 18 hours
